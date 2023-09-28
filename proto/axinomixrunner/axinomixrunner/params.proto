@@ -1,0 +1,12 @@
+syntax = "proto3";
+package axinomixrunner.axinomixrunner;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "axinomix-runner/x/axinomixrunner/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+}

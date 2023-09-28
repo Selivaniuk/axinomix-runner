@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package axinomixrunner.axinomixrunner;
+
+option go_package = "axinomix-runner/x/axinomixrunner/types";
+
+// Msg defines the Msg service.
+service Msg {
+  rpc StartRace (MsgStartRace) returns (MsgStartRaceResponse);
+  rpc EndRace   (MsgEndRace  ) returns (MsgEndRaceResponse  );
+}
+message MsgStartRace {
+  string creator = 1;
+  string amount  = 2;
+}
+
+message MsgStartRaceResponse {
+  uint64 id = 1;
+}
+
+message MsgEndRace {
+  string creator = 1;
+  uint64 coins   = 2;
+  uint64 score   = 3;
+  uint64 id      = 4;
+}
+
+message MsgEndRaceResponse {}
+

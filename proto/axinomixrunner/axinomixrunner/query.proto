@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package axinomixrunner.axinomixrunner;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "axinomixrunner/axinomixrunner/params.proto";
+import "axinomixrunner/axinomixrunner/race.proto";
+import "axinomixrunner/axinomixrunner/leaderboard.proto";
+
+option go_package = "axinomix-runner/x/axinomixrunner/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/axinomix-runner/axinomixrunner/params";
+  
+  }
+  
+  // Queries a list of Race items.
+  rpc Race    (QueryGetRaceRequest) returns (QueryGetRaceResponse) {
+    option (google.api.http).get = "/axinomix-runner/axinomixrunner/race/{id}";
+  
+  }
+  rpc RaceAll (QueryAllRaceRequest) returns (QueryAllRaceResponse) {
+    option (google.api.http).get = "/axinomix-runner/axinomixrunner/race";
+  
+  }
+  
+  // Queries a list of Leaderboard items.
+  rpc Leaderboard    (QueryGetLeaderboardRequest) returns (QueryGetLeaderboardResponse) {
+    option (google.api.http).get = "/axinomix-runner/axinomixrunner/leaderboard/{address}";
+  
+  }
+  rpc LeaderboardAll (QueryAllLeaderboardRequest) returns (QueryAllLeaderboardResponse) {
+    option (google.api.http).get = "/axinomix-runner/axinomixrunner/leaderboard";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetRaceRequest {
+  uint64 id = 1;
+}
+
+message QueryGetRaceResponse {
+  Race Race = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllRaceRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+  string address = 2;
+}
+
+message QueryAllRaceResponse {
+  repeated Race                                   Race       = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetLeaderboardRequest {
+  string address = 1;
+
+}
+
+message QueryGetLeaderboardResponse {
+  Leaderboard Leaderboard = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllLeaderboardRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllLeaderboardResponse {
+  repeated Leaderboard                            Leaderboard = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package axinomixrunner.axinomixrunner;
+
+option go_package = "axinomix-runner/x/axinomixrunner/types";
+
+message Leaderboard {
+  uint64 id = 1;
+  string playerAddress = 2;
+  uint64 Score = 3;
+  uint64 playerRank = 4;
+  
+}

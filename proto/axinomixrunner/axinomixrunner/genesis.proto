@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package axinomixrunner.axinomixrunner;
+
+import "gogoproto/gogo.proto";
+import "axinomixrunner/axinomixrunner/params.proto";
+import "axinomixrunner/axinomixrunner/race.proto";
+import "axinomixrunner/axinomixrunner/leaderboard.proto";
+
+option go_package = "axinomix-runner/x/axinomixrunner/types";
+
+// GenesisState defines the axinomixrunner module's genesis state.
+message GenesisState {
+           Params      params           = 1 [(gogoproto.nullable) = false];
+  repeated Race        raceList         = 2 [(gogoproto.nullable) = false];
+           uint64      raceCount        = 3;
+  repeated Leaderboard leaderboardList  = 4 [(gogoproto.nullable) = false];
+           uint64      leaderboardCount = 5;
+}
+
