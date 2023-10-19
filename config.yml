@@ -1,21 +1,38 @@
 version: 1
 accounts:
 - name: alice
-  coins:
-  - 20000token
-  - 200000000stake
+  coins: ["20000token", "200000000stake"]
 - name: bob
-  coins:
-  - 10000token
-  - 100000000stake
+  coins: ["10000token", "100000000stake"]
 client:
   openapi:
     path: docs/static/openapi.yml
 faucet:
   name: bob
-  coins:
-  - 5token
-  - 100000stake
+  coins: ["5token", "100000stake"]
+  host: ":4501"
+
+
+#  api: "0.0.0.0:1317"
+#  rpc: "0.0.0.0:26657"
+#  p2p: "0.0.0.0:26656"
+#  prof: "0.0.0.0:6060"
+#  grpc: "0.0.0.0:9090"
+#  grpc-web: "0.0.0.0:9091"
+
 validators:
 - name: alice
   bonded: 100000000stake
+  app:
+    api:
+      address: ":1318"
+    grpc:
+      address: ":9092"
+    grpc-web:
+      address: ":9093"
+  config:
+    p2p:
+      laddr: ":26659"
+    rpc:
+      laddr: ":26660"
+      pprof_laddr: ":6061"

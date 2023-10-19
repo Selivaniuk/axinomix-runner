@@ -27,3 +27,11 @@ const (
 	LeaderboardKey      = "Leaderboard/value/"
 	LeaderboardCountKey = "Leaderboard/count/"
 )
+
+const (
+	StartRaceEventType       = "start-race"
+	StartRaceEventId         = "id"
+	StartRaceEventMultiplier = "multiplier "
+	StartRaceEventStartTime  = "start-time"
+	StartRaceEventState      = "state"
+)

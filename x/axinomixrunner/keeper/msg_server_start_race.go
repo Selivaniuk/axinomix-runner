@@ -38,11 +38,12 @@ func (k msgServer) StartRace(goCtx context.Context, msg *types.MsgStartRace) (*t
 		return nil, sdkError
 	}
 	multiplier, err := sdk.NewDecFromInt(bet.Amount).Quo(sdk.NewDec(100)).Float64()
+	var startTime = uint64(ctx.BlockHeader().Time.UnixMilli())
 	var race = types.Race{
 		PlayerAddress: player.String(),
 		Bet:           bet.String(),
 		Multiplier:    float32(multiplier),
-		StartTime:     uint64(ctx.BlockHeader().Time.UnixMilli()),
+		StartTime:     startTime,
 		EndTime:       0,
 		CoinsEarned:   sdk.NewCoin(bet.Denom, sdk.NewInt(0)).String(),
 		Score:         0,
@@ -50,5 +51,15 @@ func (k msgServer) StartRace(goCtx context.Context, msg *types.MsgStartRace) (*t
 	}
 	raceID := k.AppendRace(ctx, race)
 	fmt.Println("Race", raceID, "successfully created")
+
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(types.StartRaceEventType,
+			sdk.NewAttribute(types.StartRaceEventId, fmt.Sprint(raceID)),
+			sdk.NewAttribute(types.StartRaceEventMultiplier, fmt.Sprint(float32(multiplier))),
+			sdk.NewAttribute(types.StartRaceEventStartTime, fmt.Sprint(startTime)),
+			sdk.NewAttribute(types.StartRaceEventState, "active"),
+		),
+	)
+
 	return &types.MsgStartRaceResponse{Id: raceID}, nil
 }
