@@ -31,6 +31,14 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgEndRace int = 100
 
+	opWeightMsgBankReplenishment = "op_weight_msg_bank_replenishment"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgBankReplenishment int = 100
+
+	opWeightMsgWithdrawBank = "op_weight_msg_withdraw_bank"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgWithdrawBank int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -81,6 +89,28 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		axinomixrunnersimulation.SimulateMsgEndRace(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgBankReplenishment int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgBankReplenishment, &weightMsgBankReplenishment, nil,
+		func(_ *rand.Rand) {
+			weightMsgBankReplenishment = defaultWeightMsgBankReplenishment
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgBankReplenishment,
+		axinomixrunnersimulation.SimulateMsgBankReplenishment(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgWithdrawBank int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgWithdrawBank, &weightMsgWithdrawBank, nil,
+		func(_ *rand.Rand) {
+			weightMsgWithdrawBank = defaultWeightMsgWithdrawBank
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgWithdrawBank,
+		axinomixrunnersimulation.SimulateMsgWithdrawBank(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -102,6 +132,22 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgEndRace,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				axinomixrunnersimulation.SimulateMsgEndRace(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgBankReplenishment,
+			defaultWeightMsgBankReplenishment,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				axinomixrunnersimulation.SimulateMsgBankReplenishment(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgWithdrawBank,
+			defaultWeightMsgWithdrawBank,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				axinomixrunnersimulation.SimulateMsgWithdrawBank(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),

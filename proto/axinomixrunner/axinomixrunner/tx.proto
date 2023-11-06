@@ -6,8 +6,10 @@ option go_package = "axinomix-runner/x/axinomixrunner/types";
 
 // Msg defines the Msg service.
 service Msg {
-  rpc StartRace (MsgStartRace) returns (MsgStartRaceResponse);
-  rpc EndRace   (MsgEndRace  ) returns (MsgEndRaceResponse  );
+  rpc StartRace         (MsgStartRace        ) returns (MsgStartRaceResponse        );
+  rpc EndRace           (MsgEndRace          ) returns (MsgEndRaceResponse          );
+  rpc BankReplenishment (MsgBankReplenishment) returns (MsgBankReplenishmentResponse);
+  rpc WithdrawBank      (MsgWithdrawBank     ) returns (MsgWithdrawBankResponse     );
 }
 message MsgStartRace {
   string creator = 1;
@@ -26,4 +28,18 @@ message MsgEndRace {
 }
 
 message MsgEndRaceResponse {}
+
+message MsgBankReplenishment {
+  string creator = 1;
+  string amount  = 2;
+}
+
+message MsgBankReplenishmentResponse {}
+
+message MsgWithdrawBank {
+  string creator = 1;
+  string amount  = 2;
+}
+
+message MsgWithdrawBankResponse {}
 

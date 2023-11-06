@@ -46875,6 +46875,8 @@ definitions:
       playerRank:
         type: string
         format: uint64
+  axinomixrunner.axinomixrunner.MsgBankReplenishmentResponse:
+    type: object
   axinomixrunner.axinomixrunner.MsgEndRaceResponse:
     type: object
   axinomixrunner.axinomixrunner.MsgStartRaceResponse:
@@ -46883,6 +46885,8 @@ definitions:
       id:
         type: string
         format: uint64
+  axinomixrunner.axinomixrunner.MsgWithdrawBankResponse:
+    type: object
   axinomixrunner.axinomixrunner.Params:
     type: object
     description: Params defines the parameters for the module.
