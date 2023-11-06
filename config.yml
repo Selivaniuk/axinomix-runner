@@ -1,15 +1,15 @@
 version: 1
 accounts:
 - name: alice
-  coins: ["20000token", "200000000stake"]
+  coins: ["10000000000runner"]
 - name: bob
-  coins: ["10000token", "100000000stake"]
+  coins: ["100000000runner"]
 client:
   openapi:
     path: docs/static/openapi.yml
 faucet:
   name: bob
-  coins: ["5token", "100000stake"]
+  coins: ["100runner"]
   host: ":4501"
 
 
@@ -22,7 +22,7 @@ faucet:
 
 validators:
 - name: alice
-  bonded: 100000000stake
+  bonded: 100000000runner
   app:
     api:
       address: ":1318"
@@ -36,3 +36,27 @@ validators:
     rpc:
       laddr: ":26660"
       pprof_laddr: ":6061"
+
+genesis:
+  app_state:
+    staking:
+      params:
+        bond_denom: runner
+    bank:
+      denom_metadata:
+        - name: runner
+          symbol: RUNNER
+          description: The native staking runner of the Axinomix Runner Network.
+          denom_units:
+            - denom: urunner
+              exponent: 0
+              aliases:
+                - microrunner
+            - denom: mrunner
+              exponent: 3
+              aliases:
+                - millirunner
+            - denom: runner
+              exponent: 6
+          base: urunner
+          display: runner
