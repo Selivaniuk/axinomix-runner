@@ -27,7 +27,10 @@ message MsgEndRace {
   uint64 id      = 4;
 }
 
-message MsgEndRaceResponse {}
+message MsgEndRaceResponse {
+  uint64 id = 1;
+  uint64 coins   = 2;
+}
 
 message MsgBankReplenishment {
   string creator = 1;

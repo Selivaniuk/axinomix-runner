@@ -35,3 +35,8 @@ const (
 	StartRaceEventStartTime  = "start-time"
 	StartRaceEventState      = "state"
 )
+const (
+	EndRaceEventType  = "end-race"
+	EndRaceEventId    = "id"
+	EndRaceEventCoins = "coins "
+)

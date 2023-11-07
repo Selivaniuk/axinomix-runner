@@ -46879,6 +46879,13 @@ definitions:
     type: object
   axinomixrunner.axinomixrunner.MsgEndRaceResponse:
     type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      coins:
+        type: string
+        format: uint64
   axinomixrunner.axinomixrunner.MsgStartRaceResponse:
     type: object
     properties:

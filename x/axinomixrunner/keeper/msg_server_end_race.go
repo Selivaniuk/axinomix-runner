@@ -50,5 +50,14 @@ func (k msgServer) EndRace(goCtx context.Context, msg *types.MsgEndRace) (*types
 	k.SetRace(ctx, race)
 	k.UpdatePlayerRank(ctx, player.String(), msg.Score)
 
-	return &types.MsgEndRaceResponse{}, nil
+	ctx.EventManager().EmitEvent(
+		sdk.NewEvent(types.EndRaceEventType,
+			sdk.NewAttribute(types.EndRaceEventId, fmt.Sprint(race.Id)),
+			sdk.NewAttribute(types.EndRaceEventCoins, fmt.Sprint(coinsEarned.Amount.Uint64())),
+		),
+	)
+	return &types.MsgEndRaceResponse{
+		Id:    race.Id,
+		Coins: coinsEarned.Amount.Uint64(),
+	}, nil
 }
