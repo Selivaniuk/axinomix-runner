@@ -9,10 +9,11 @@ const TypeMsgStartRace = "start_race"
 
 var _ sdk.Msg = &MsgStartRace{}
 
-func NewMsgStartRace(creator string, amount string) *MsgStartRace {
+func NewMsgStartRace(creator string, amount string, mode string) *MsgStartRace {
 	return &MsgStartRace{
 		Creator: creator,
 		Amount:  amount,
+		Mode:    mode,
 	}
 }
 

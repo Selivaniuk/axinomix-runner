@@ -16,9 +16,10 @@ func CmdStartRace() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "start-race [amount]",
 		Short: "Broadcast message start-race",
-		Args:  cobra.ExactArgs(1),
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argAmount := args[0]
+			argMode := args[1]
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
 				return err
@@ -27,6 +28,7 @@ func CmdStartRace() *cobra.Command {
 			msg := types.NewMsgStartRace(
 				clientCtx.GetFromAddress().String(),
 				argAmount,
+				argMode,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

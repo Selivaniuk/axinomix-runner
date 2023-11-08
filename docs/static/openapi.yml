@@ -240,9 +240,11 @@ paths:
                       type: string
                     bet:
                       type: string
-                    multiplier:
-                      type: number
-                      format: float
+                    mode:
+                      type: string
+                    needToCollectCoins:
+                      type: string
+                      format: uint64
                     startTime:
                       type: string
                       format: uint64
@@ -250,6 +252,9 @@ paths:
                       type: string
                       format: uint64
                     coinsEarned:
+                      type: string
+                      format: uint64
+                    winAmount:
                       type: string
                     score:
                       type: string
@@ -385,9 +390,11 @@ paths:
                     type: string
                   bet:
                     type: string
-                  multiplier:
-                    type: number
-                    format: float
+                  mode:
+                    type: string
+                  needToCollectCoins:
+                    type: string
+                    format: uint64
                   startTime:
                     type: string
                     format: uint64
@@ -395,6 +402,9 @@ paths:
                     type: string
                     format: uint64
                   coinsEarned:
+                    type: string
+                    format: uint64
+                  winAmount:
                     type: string
                   score:
                     type: string
@@ -46883,13 +46893,15 @@ definitions:
       id:
         type: string
         format: uint64
-      coins:
+      winAmount:
         type: string
-        format: uint64
   axinomixrunner.axinomixrunner.MsgStartRaceResponse:
     type: object
     properties:
       id:
+        type: string
+        format: uint64
+      needToCollectCoins:
         type: string
         format: uint64
   axinomixrunner.axinomixrunner.MsgWithdrawBankResponse:
@@ -46957,9 +46969,11 @@ definitions:
               type: string
             bet:
               type: string
-            multiplier:
-              type: number
-              format: float
+            mode:
+              type: string
+            needToCollectCoins:
+              type: string
+              format: uint64
             startTime:
               type: string
               format: uint64
@@ -46967,6 +46981,9 @@ definitions:
               type: string
               format: uint64
             coinsEarned:
+              type: string
+              format: uint64
+            winAmount:
               type: string
             score:
               type: string
@@ -47029,9 +47046,11 @@ definitions:
             type: string
           bet:
             type: string
-          multiplier:
-            type: number
-            format: float
+          mode:
+            type: string
+          needToCollectCoins:
+            type: string
+            format: uint64
           startTime:
             type: string
             format: uint64
@@ -47039,6 +47058,9 @@ definitions:
             type: string
             format: uint64
           coinsEarned:
+            type: string
+            format: uint64
+          winAmount:
             type: string
           score:
             type: string
@@ -47062,9 +47084,11 @@ definitions:
         type: string
       bet:
         type: string
-      multiplier:
-        type: number
-        format: float
+      mode:
+        type: string
+      needToCollectCoins:
+        type: string
+        format: uint64
       startTime:
         type: string
         format: uint64
@@ -47072,6 +47096,9 @@ definitions:
         type: string
         format: uint64
       coinsEarned:
+        type: string
+        format: uint64
+      winAmount:
         type: string
       score:
         type: string

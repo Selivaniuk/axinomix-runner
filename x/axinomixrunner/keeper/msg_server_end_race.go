@@ -37,13 +37,18 @@ func (k msgServer) EndRace(goCtx context.Context, msg *types.MsgEndRace) (*types
 		return nil, err
 	}
 
-	coinsEarned := sdk.NewCoin(bet.Denom, sdk.NewInt(int64(float64(race.Multiplier)*float64(msg.Coins))))
-	sdkError := k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, player, sdk.NewCoins(coinsEarned))
+	var winAmount = sdk.NewCoin(bet.Denom, sdk.NewInt(0))
+	var sdkError error
+	if msg.Coins >= race.NeedToCollectCoins {
+		winAmount = sdk.NewCoin(bet.Denom, bet.Amount.MulRaw(2))
+		sdkError = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, player, sdk.NewCoins(winAmount))
+	}
 	if sdkError != nil {
 		return nil, sdkError
 	}
 
-	race.CoinsEarned = coinsEarned.String()
+	race.WinAmount = winAmount.String()
+	race.CoinsEarned = msg.Coins
 	race.Score = msg.Score
 	race.EndTime = uint64(ctx.BlockHeader().Time.UnixMilli())
 	race.State = "finished"
@@ -53,11 +58,11 @@ func (k msgServer) EndRace(goCtx context.Context, msg *types.MsgEndRace) (*types
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(types.EndRaceEventType,
 			sdk.NewAttribute(types.EndRaceEventId, fmt.Sprint(race.Id)),
-			sdk.NewAttribute(types.EndRaceEventCoins, fmt.Sprint(coinsEarned.Amount.Uint64())),
+			sdk.NewAttribute(types.EndRaceEventWinAmount, fmt.Sprint(winAmount.String())),
 		),
 	)
 	return &types.MsgEndRaceResponse{
-		Id:    race.Id,
-		Coins: coinsEarned.Amount.Uint64(),
+		Id:        race.Id,
+		WinAmount: winAmount.String(),
 	}, nil
 }

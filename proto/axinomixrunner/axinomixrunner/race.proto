@@ -7,11 +7,13 @@ message Race {
   uint64 id = 1;
   string playerAddress = 2;
   string bet = 3;
-  float multiplier = 4;
-  uint64 startTime = 5;
-  uint64 endTime = 6;
-  string coinsEarned = 7;
-  uint64 score = 8;
-  string state = 9;
+  string mode = 4;
+  uint64 needToCollectCoins = 5;
+  uint64 startTime = 6;
+  uint64 endTime = 7;
+  uint64 coinsEarned = 8;
+  string winAmount = 9;
+  uint64 score = 10;
+  string state = 11;
 
 }

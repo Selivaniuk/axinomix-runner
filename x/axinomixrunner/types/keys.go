@@ -29,14 +29,14 @@ const (
 )
 
 const (
-	StartRaceEventType       = "start-race"
-	StartRaceEventId         = "id"
-	StartRaceEventMultiplier = "multiplier "
-	StartRaceEventStartTime  = "start-time"
-	StartRaceEventState      = "state"
+	StartRaceEventType               = "start-race"
+	StartRaceEventId                 = "id"
+	StartRaceEventNeedToCollectCoins = "need-to-collect-coins "
+	StartRaceEventStartTime          = "start-time"
+	StartRaceEventState              = "state"
 )
 const (
-	EndRaceEventType  = "end-race"
-	EndRaceEventId    = "id"
-	EndRaceEventCoins = "coins "
+	EndRaceEventType      = "end-race"
+	EndRaceEventId        = "id"
+	EndRaceEventWinAmount = "win-amount "
 )

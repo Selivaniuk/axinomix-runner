@@ -7,9 +7,13 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
+const R = 0.75
+const CPM = 0.8
+const Distance = 500
+const NeedToCollect = uint64(Distance * CPM * R)
+
 func (k msgServer) StartRace(goCtx context.Context, msg *types.MsgStartRace) (*types.MsgStartRaceResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
-
 	player, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, err
@@ -21,11 +25,11 @@ func (k msgServer) StartRace(goCtx context.Context, msg *types.MsgStartRace) (*t
 	}
 
 	minBet := sdk.NewInt(10)
-	if !bet.Amount.GTE(minBet) {
+	if bet.Amount.LT(minBet) {
 		return nil, fmt.Errorf("min bet is %s", sdk.NewCoin(bet.Denom, minBet).String())
 	}
-	maxBet := sdk.NewInt(1000)
-	if !bet.Amount.LTE(maxBet) {
+	maxBet := sdk.NewInt(10000)
+	if bet.Amount.GT(maxBet) {
 		return nil, fmt.Errorf("max bet is %s", sdk.NewCoin(bet.Denom, maxBet).String())
 	}
 
@@ -37,17 +41,18 @@ func (k msgServer) StartRace(goCtx context.Context, msg *types.MsgStartRace) (*t
 	if sdkError != nil {
 		return nil, sdkError
 	}
-	multiplier, err := sdk.NewDecFromInt(bet.Amount).Quo(sdk.NewDec(100)).Float64()
+
 	var startTime = uint64(ctx.BlockHeader().Time.UnixMilli())
 	var race = types.Race{
-		PlayerAddress: player.String(),
-		Bet:           bet.String(),
-		Multiplier:    float32(multiplier),
-		StartTime:     startTime,
-		EndTime:       0,
-		CoinsEarned:   sdk.NewCoin(bet.Denom, sdk.NewInt(0)).String(),
-		Score:         0,
-		State:         "active",
+		PlayerAddress:      player.String(),
+		Mode:               msg.Mode,
+		Bet:                bet.String(),
+		NeedToCollectCoins: NeedToCollect,
+		StartTime:          startTime,
+		EndTime:            0,
+		CoinsEarned:        0,
+		Score:              0,
+		State:              "active",
 	}
 	raceID := k.AppendRace(ctx, race)
 	fmt.Println("Race", raceID, "successfully created")
@@ -55,7 +60,7 @@ func (k msgServer) StartRace(goCtx context.Context, msg *types.MsgStartRace) (*t
 	ctx.EventManager().EmitEvent(
 		sdk.NewEvent(types.StartRaceEventType,
 			sdk.NewAttribute(types.StartRaceEventId, fmt.Sprint(raceID)),
-			sdk.NewAttribute(types.StartRaceEventMultiplier, fmt.Sprint(float32(multiplier))),
+			sdk.NewAttribute(types.StartRaceEventNeedToCollectCoins, fmt.Sprint(NeedToCollect)),
 			sdk.NewAttribute(types.StartRaceEventStartTime, fmt.Sprint(startTime)),
 			sdk.NewAttribute(types.StartRaceEventState, "active"),
 		),
