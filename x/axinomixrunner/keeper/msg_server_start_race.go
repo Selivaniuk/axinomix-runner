@@ -61,8 +61,8 @@ func (k msgServer) StartRace(goCtx context.Context, msg *types.MsgStartRace) (*t
 		sdk.NewEvent(types.StartRaceEventType,
 			sdk.NewAttribute(types.StartRaceEventId, fmt.Sprint(raceID)),
 			sdk.NewAttribute(types.StartRaceEventNeedToCollectCoins, fmt.Sprint(NeedToCollect)),
-			sdk.NewAttribute(types.StartRaceEventStartTime, fmt.Sprint(startTime)),
-			sdk.NewAttribute(types.StartRaceEventState, "active"),
+			sdk.NewAttribute(types.StartRaceEventDistance, fmt.Sprint(Distance)),
+			sdk.NewAttribute(types.StartRaceEventBet, fmt.Sprint(bet.String())),
 		),
 	)
 

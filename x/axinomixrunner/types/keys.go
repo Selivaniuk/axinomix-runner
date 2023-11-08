@@ -31,9 +31,9 @@ const (
 const (
 	StartRaceEventType               = "start-race"
 	StartRaceEventId                 = "id"
-	StartRaceEventNeedToCollectCoins = "need-to-collect-coins "
-	StartRaceEventStartTime          = "start-time"
-	StartRaceEventState              = "state"
+	StartRaceEventNeedToCollectCoins = "need-to-collect-coins"
+	StartRaceEventDistance           = "distance"
+	StartRaceEventBet                = "bet"
 )
 const (
 	EndRaceEventType      = "end-race"
