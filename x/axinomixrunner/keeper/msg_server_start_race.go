@@ -51,6 +51,7 @@ func (k msgServer) StartRace(goCtx context.Context, msg *types.MsgStartRace) (*t
 		StartTime:          startTime,
 		EndTime:            0,
 		CoinsEarned:        0,
+		Distance:           Distance,
 		Score:              0,
 		State:              "active",
 	}

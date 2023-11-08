@@ -256,6 +256,9 @@ paths:
                       format: uint64
                     winAmount:
                       type: string
+                    distance:
+                      type: string
+                      format: uint64
                     score:
                       type: string
                       format: uint64
@@ -406,6 +409,9 @@ paths:
                     format: uint64
                   winAmount:
                     type: string
+                  distance:
+                    type: string
+                    format: uint64
                   score:
                     type: string
                     format: uint64
@@ -46985,6 +46991,9 @@ definitions:
               format: uint64
             winAmount:
               type: string
+            distance:
+              type: string
+              format: uint64
             score:
               type: string
               format: uint64
@@ -47062,6 +47071,9 @@ definitions:
             format: uint64
           winAmount:
             type: string
+          distance:
+            type: string
+            format: uint64
           score:
             type: string
             format: uint64
@@ -47100,6 +47112,9 @@ definitions:
         format: uint64
       winAmount:
         type: string
+      distance:
+        type: string
+        format: uint64
       score:
         type: string
         format: uint64

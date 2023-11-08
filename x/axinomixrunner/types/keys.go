@@ -38,5 +38,5 @@ const (
 const (
 	EndRaceEventType      = "end-race"
 	EndRaceEventId        = "id"
-	EndRaceEventWinAmount = "win-amount "
+	EndRaceEventWinAmount = "win-amount"
 )

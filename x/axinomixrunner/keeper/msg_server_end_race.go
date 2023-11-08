@@ -39,7 +39,7 @@ func (k msgServer) EndRace(goCtx context.Context, msg *types.MsgEndRace) (*types
 
 	var winAmount = sdk.NewCoin(bet.Denom, sdk.NewInt(0))
 	var sdkError error
-	if msg.Coins >= race.NeedToCollectCoins {
+	if msg.Coins >= race.NeedToCollectCoins && msg.Score >= race.Distance {
 		winAmount = sdk.NewCoin(bet.Denom, bet.Amount.MulRaw(2))
 		sdkError = k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, player, sdk.NewCoins(winAmount))
 	}
